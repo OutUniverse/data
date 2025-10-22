@@ -4,9 +4,9 @@ import pandas as pd
 import matplotlib.dates as mdates
 from datetime import timedelta
 
-excel_file = pd.ExcelFile('./data/hst-2025-01-10.xlsx')
+excel_file = pd.ExcelFile('./data/hts_01_10.xlsx')
 
-df = excel_file.parse('恒生科技指數歷史數據')
+df = excel_file.parse('sheet1')
 
 # 转换成交量为数值型
 df['成交量'] = df['成交量'].replace({'B': '*1e9', 'M': '*1e6'}, regex=True).map(pd.eval).astype(float)
@@ -18,7 +18,7 @@ df['日期'] = df['日期'].map(mdates.date2num)
 ohlc = df[['日期', '開市', '收市', '高', '低']].copy()  # 使用copy避免修改原始数据
 
 # 将K线图的日期往前移动
-ohlc['日期'] = ohlc['日期'] - 12
+ohlc['日期'] = ohlc['日期']
 
 # 设置图片清晰度
 plt.rcParams['figure.dpi'] = 300
