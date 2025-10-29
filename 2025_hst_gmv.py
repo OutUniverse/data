@@ -11,16 +11,16 @@ plt.rcParams['savefig.dpi'] = 150
 plt.rcParams['figure.figsize'] = [10, 6]
 
 excel_file = pd.ExcelFile('./data/hst_01_10.xlsx')
-df = excel_file.parse('sheet1')
+df = excel_file.parse('hst_01_10')
 
 # 转换成交量为数值型
-df['成交量'] = df['成交量'].replace({'B': '*1e9', 'M': '*1e6'}, regex=True).map(pd.eval).astype(float)
+df['交易量'] = df['交易量'].replace({'B': '*1e9', 'M': '*1e6'}, regex=True).map(pd.eval).astype(float)
 
 # 将日期转换为 matplotlib 可接受的格式
 df['日期'] = df['日期'].map(mdates.date2num)
 
 # 准备绘制 K 线图的数据
-ohlc = df[['日期', '開市', '收市', '高', '低']].copy()
+ohlc = df[['日期', '开盘', '收盘', '高', '低']].copy()
 
 # 创建主图和副图
 fig, ax1 = plt.subplots(figsize=(10, 6))
@@ -31,7 +31,7 @@ midline = (ohlc['高'] + ohlc['低']) / 2
 ax1.plot(ohlc['日期'], midline, color='blue', label='middle', linewidth=1.0)
 
 # 在副图上绘制成交量折线图
-ax2.plot(df['日期'], df['成交量'], color='orange', label='gmv', linewidth=1.0)
+ax2.plot(df['日期'], df['交易量'], color='orange', label='gmv', linewidth=1.0)
 
 # 设置 x 轴为日期格式
 ax1.xaxis_date()
