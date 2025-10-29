@@ -20,7 +20,7 @@ df['交易量'] = df['交易量'].replace({'B': '*1e9', 'M': '*1e6'}, regex=True
 df['日期'] = df['日期'].map(mdates.date2num)
 
 # 准备绘制 K 线图的数据
-ohlc = df[['日期', '開市', '收市', '高', '低']].copy()
+ohlc = df[['日期', '开盘', '收盘', '高', '低']].copy()
 
 # 创建主图和副图
 fig, ax1 = plt.subplots(figsize=(10, 6))
