@@ -10,8 +10,8 @@ plt.rcParams['figure.dpi'] = 150
 plt.rcParams['savefig.dpi'] = 150
 plt.rcParams['figure.figsize'] = [10, 6]
 
-excel_file = pd.ExcelFile('./data/hst_01_10.xlsx')
-df = excel_file.parse('hst_01_10')
+excel_file = pd.ExcelFile('./data/hst_01_11.xlsx')
+df = excel_file.parse('hst_01_11')
 
 # 转换成交量为数值型
 df['交易量'] = df['交易量'].replace({'B': '*1e9', 'M': '*1e6'}, regex=True).map(pd.eval).astype(float)
@@ -26,9 +26,15 @@ ohlc = df[['日期', '开盘', '收盘', '高', '低']].copy()
 fig, ax1 = plt.subplots(figsize=(10, 6))
 ax2 = ax1.twinx()
 
-# 隐藏K线图，只绘制中点连线
+# 绘制中点连线
 midline = (ohlc['高'] + ohlc['低']) / 2
 ax1.plot(ohlc['日期'], midline, color='blue', label='middle', linewidth=1.0)
+
+# 添加开盘价折线图（绿色）
+ax1.plot(ohlc['日期'], ohlc['开盘'], color='green', label='open', linewidth=1.0)
+
+# 添加收盘价折线图（红色）
+ax1.plot(ohlc['日期'], ohlc['收盘'], color='red', label='close', linewidth=1.0)
 
 # 在副图上绘制成交量折线图
 ax2.plot(df['日期'], df['交易量'], color='orange', label='gmv', linewidth=1.0)
@@ -73,4 +79,4 @@ plt.savefig(filepath, dpi=150, bbox_inches='tight')
 print(f"图表已保存为: {filepath}")
 
 # 显示图形
-plt.show(block=True)  # block=True 确保程序等待窗口关闭
+plt.show(block=True)
