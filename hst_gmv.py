@@ -50,7 +50,7 @@ ax1.plot(ohlc['日期'], ohlc['收盘'], color='red', label='close', linewidth=1
 ax2.plot(df['日期'], df['交易量'], color='orange', label='gmv', linewidth=1.0)
 
 # 新增：绘制交易量占比百分比折线图（紫色）
-ax3.plot(df['日期'], df['交易量占比(%)'], color='purple', label='hst/hs(%)', linewidth=1.0)
+# ax3.plot(df['日期'], df['交易量占比(%)'], color='purple', label='hst/hs(%)', linewidth=1.0)
 
 # 设置 x 轴为日期格式
 ax1.xaxis_date()
